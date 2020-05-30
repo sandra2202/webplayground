@@ -129,4 +129,5 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 #Auth Redirects
-LOGIN_REDIRECT_URL = 'home'
+LOGIN_REDIRECT_URL = 'pages:pages'
+LOGOUT_REDIRECT_URL = 'home'
