@@ -7,6 +7,9 @@
   <div class="container">
     <div class="row mt-3">
       <div class="col-md-9 mx-auto mb-5">
+        {% if 'register' in request.GET %}
+          <p style="color:green;">Usuario registrado correctamente, ya puedes iniciar sesión</p>
+        {% endif %}
         <form action="" method="post">{% csrf_token %}
           <h3 class="mb-4">Iniciar sesión</h3>
           {% if form.non_field_errors %}
