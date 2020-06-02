@@ -60,15 +60,21 @@
             </div>
             <!-- Aquí crearemos el formulario -->
             <textarea id="content" class="form-control mb-2" rows="2" placeholder="Escribe tu mensaje aqui"></textarea>
-            <button id="send" class="btn btn-primary btn-sm btn-block" disabled>Petición Asíncrona de Prueba</button>
+            <button id="send" class="btn btn-primary btn-sm btn-block" disabled>Enviar Mensaje</button>
             <script>
               var send = document.getElementById("send");
               send.addEventListener("click", function(){
                 var content = encodeURIComponent(document.getElementById("content").value);
                 if (content.length > 0){
+                  document.getElementById("content").value = '';
+                  send.disabled = true;
                   const url = "{% url 'messenger:add' thread.pk %}" + "?content="+content;
                   fetch(url, {'credentials':'include'}).then(response => response.json()).then(function(data){
-                    alert(data.created);                    
+                    var message =document.createElement('div');
+                    message.classList.add('mine', 'mb-3');
+                    message.innerHTML = '<small><i>Hace unos segundos</i></small><br>'+decodeURIComponent(content); 
+                    document.getElementById("thread").appendChild(message);
+                    ScrollBottomInThread();                  
                  })
                 }                
               })
@@ -82,6 +88,14 @@
                   send.disabled = false;
                 }
               })
+
+              //Forzar el Scroll abajo del todo
+              function ScrollBottomInThread(){
+                var thread = document.getElementById("thread");
+                thread.scrollTop = thread.scrollHeight;                
+              }
+
+              ScrollBottomInThread();
             </script>
           </div>
         </div>
